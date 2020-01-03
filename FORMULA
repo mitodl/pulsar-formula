@@ -1,0 +1,9 @@
+name: pulsar
+os: RedHat, CentOS, Ubuntu, Debian
+os_family: RedHat, Debian
+version: 202001
+release: 1
+summary: SaltStack formula for deploying and managing Apache Pulsar
+description: SaltStack formula for deploying and managing Apache Pulsar
+top_level_dir: pulsar
+recommended: 

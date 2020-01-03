@@ -1,0 +1,7 @@
+# -*- mode: yaml -*-
+pulsar:
+  overrides:
+    pkg: pulsar
+    conf_file: /usr/local/etc/pulsar/pulsar.conf
+  config:
+    key: othervalue

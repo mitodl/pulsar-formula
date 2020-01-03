@@ -1,0 +1,14 @@
+{% set pulsar = salt.grains.filter_by({
+    'default': {
+        'pkgs': ['pulsar'],
+        'service': 'pulsar',
+        'conf_file': '/etc/pulsar/pulsar.conf',
+        'config': {
+            'key': 'value',
+        },
+    },
+    'Debian': {
+    },
+    'RedHat': {
+    },
+}, grain='os_family', merge=salt.pillar.get('pulsar'), base='default') %}
