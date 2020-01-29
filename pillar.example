@@ -1,7 +1,11 @@
 # -*- mode: yaml -*-
 pulsar:
-  overrides:
-    pkg: pulsar
-    conf_file: /usr/local/etc/pulsar/pulsar.conf
+  io_connectors:
+    - data-generator
+    - file
+  services:
+    - broker
+    - functions-worker
   config:
-    key: othervalue
+    broker.conf:
+      clusterName: testcluster

@@ -1,14 +1,72 @@
 {% set pulsar = salt.grains.filter_by({
     'default': {
-        'pkgs': ['pulsar'],
         'service': 'pulsar',
         'conf_file': '/etc/pulsar/pulsar.conf',
+        'version': '2.5.0',
         'config': {
-            'key': 'value',
+            'broker.conf': {
+                'zookeeperServers': 'localhost:2181',
+                'configurationStoreServers': 'localhost:2181'
+            }
         },
+        'user': 'pulsar',
+        'group': 'pulsar',
+        'install_offloaders': True,
+        'io_connectors': [],
+        'services': [
+            'broker'
+        ],
+        'env': {
+            'PULSAR_LOG_DIR': '/var/log/pulsar/',
+            'PULSAR_LOG_CONF': '/opt/pulsar/conf/log4j2.yaml',
+            'PULSAR_BROKER_CONF': '/opt/pulsar/conf/broker.conf',
+            'PULSAR_BOOKKEEPER_CONF': '/opt/pulsar/conf/bookkeeper.conf',
+            'PULSAR_ZK_CONF': '/opt/pulsar/conf/zookeeper.conf',
+            'PULSAR_CONFIGURATION_STORE_CONF': '/opt/pulsar/conf/global_zookeeper.conf',
+            'PULSAR_DISCOVERY_CONF': '/opt/pulsar/conf/discovery.conf',
+            'PULSAR_WEBSOCKET_CONF': '/opt/pulsar/conf/websocket.conf',
+            'PULSAR_PROXY_CONF': '/opt/pulsar/conf/proxy.conf',
+            'PULSAR_WORKER_CONF': '/opt/pulsar/conf/functions_worker.yaml',
+            'PULSAR_STANDALONE_CONF': '/opt/pulsar/conf/standalone.conf',
+            'PULSAR_PRESTO_CONF': '/opt/pulsar/conf/presto',
+            'PULSAR_PID_DIR': '/var/run/pulsar/'
+        }
     },
     'Debian': {
+        'pkgs': ['default-jdk-headless']
     },
     'RedHat': {
+        'pkgs': ['java-latest-openjdk-headless']
     },
 }, grain='os_family', merge=salt.pillar.get('pulsar'), base='default') %}
+
+{% set pulsar_configs = {
+    'bookkeeper.conf': {'service': 'bookkeeper'},
+    'broker.conf': {'service': 'broker'},
+    'discovery.conf': {'service': 'discovery'},
+    'filesystem_offload_core_site.xml': {'service': 'broker'},
+    'functions_worker.yaml': {'service': 'functions-worker'},
+    'global_zookeeper.conf': {'service': 'zookeeper'},
+    'proxy.conf': {'service': 'proxy'},
+    'presto/config.properties': {'service': 'sql-worker'},
+    'presto/log.properties': {'service': 'sql-worker'},
+    'standalone.conf': {'service': 'standalone'},
+    'websocket.conf': {'service': 'websocket'},
+    'zookeeper.conf': {'service': 'zookeeper'}
+} %}
+
+{% set file_types = {
+    'yml': 'yaml',
+    'yaml': 'yaml',
+    'xml': 'xml',
+    'conf': 'conf',
+    'properties': 'conf',
+    'ini': 'ini'
+} %}
+
+{% set mirror_data = 'https://www.apache.org/dyn/closer.cgi/pulsar?as_json=1'|http_query %}
+{% set mirror_urls = mirror_data.body|load_json %}
+{% set apache_mirror = {
+    'preferred_url': mirror_urls.preferred,
+    'backup_url': mirror_urls.backup[0]
+} %}

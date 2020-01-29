@@ -6,4 +6,4 @@ release: 1
 summary: SaltStack formula for deploying and managing Apache Pulsar
 description: SaltStack formula for deploying and managing Apache Pulsar
 top_level_dir: pulsar
-recommended: 
+recommended: bookkeeper-formula,zookeeper-formula

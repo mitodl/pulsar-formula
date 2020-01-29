@@ -1,6 +1,7 @@
 base:
   '*':
+    - zookeeper.server
+    - bookkeeper
     - pulsar
-    
+    - pulsar.io
     - pulsar.tests
-    
