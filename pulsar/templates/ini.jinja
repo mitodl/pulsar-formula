@@ -1,0 +1,14 @@
+{%- for section, config in settings.items() %}
+[{{ section }}]
+{%- for line in config %}
+  {%- for key, value in line.items() %}
+    {%- if value is sequence and not value is string %}
+      {%- for v in value %}
+{{ key }}={{ v }}
+      {%- endfor %}
+    {%- else %}
+{{ key }}={{ value }}
+    {%- endif %}
+  {%- endfor %}
+{%- endfor %}
+{%- endfor %}

@@ -1,8 +1,3 @@
-{# Template for a config file. Context object name: config #}
-{% for section, settings in config.items() %}
-[{{ section }}]
-{% for key, value in settings.items() %}
+{%- for key, value in settings.items() %}
 {{ key }}={{ value }}
-{% endfor %}
-{% endfor %}
-
+{%- endfor %}

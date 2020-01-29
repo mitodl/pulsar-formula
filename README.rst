@@ -29,7 +29,17 @@ Handles installation of pulsar
 ``pulsar.config``
 ---------------
 
-Handles configuration of pulsar
+Handles configuration of pulsar services
+
+``pulsar.functions``
+---------------
+
+Handles installation and deployment of Pulsar Functions
+
+``pulsar.io``
+---------------
+
+Handles installation and deployment of Pulsar IO connectors
 
 
 Template

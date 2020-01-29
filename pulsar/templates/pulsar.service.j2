@@ -1,0 +1,21 @@
+{% from "pulsar/map.jinja" import pulsar with context %}
+{% if service_name == 'sql-worker' %}
+  {% set pulsar_command = 'sql-worker start' %}
+{% else %}
+  {% set pulsar_command = service_name %}
+{% endif %}
+[Unit]
+Description=Pulsar {{ service_name }} service
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/defaults/pulsar
+RuntimeDirectory=pulsar
+Restart=on-failure
+ExecStart=/opt/pulsar/bin/pulsar {{ pulsar_command }}
+User={{ pulsar.user }}
+Group={{ pulsar.group }}
+
+[Install]
+WantedBy=multi-user.target
