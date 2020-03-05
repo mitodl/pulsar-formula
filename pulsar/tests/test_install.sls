@@ -1,7 +1,7 @@
 {% from "pulsar/map.jinja" import pulsar with context %}
 
 {% for pkg in pulsar.pkgs %}
-test_{{pkg}}_is_installed:
+test_{{pkg}}_is_installed_for_pulsar:
   testinfra.package:
     - name: {{ pkg }}
     - is_installed: True
